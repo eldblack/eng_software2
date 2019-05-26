@@ -41,7 +41,6 @@ public class MenuGerente extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCad = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -65,23 +64,15 @@ public class MenuGerente extends javax.swing.JFrame {
         setLocation(new java.awt.Point(220, 100));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 102, 0));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/logo-principal.png"))); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addGap(0, 420, Short.MAX_VALUE))
+            .addGap(0, 853, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addGap(0, 66, Short.MAX_VALUE))
+            .addGap(0, 457, Short.MAX_VALUE)
         );
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
@@ -289,7 +280,6 @@ public class MenuGerente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

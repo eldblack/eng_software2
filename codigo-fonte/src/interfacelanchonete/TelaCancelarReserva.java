@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import metodos.Metodos;
+import pessoas.Funcionario;
 
 /**
  *
@@ -22,7 +24,9 @@ public class TelaCancelarReserva extends javax.swing.JFrame {
     /**
      * Creates new form TelaCancelarReserva
      */
-    public TelaCancelarReserva() {
+    String cpf;
+    public TelaCancelarReserva(String cpf) {
+        this.cpf = cpf;
         initComponents();
         mostrar();
     }
@@ -160,9 +164,14 @@ public class TelaCancelarReserva extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        dispose();
-        MenuFuncionario menu = new MenuFuncionario();
-        menu.show();
+        Metodos met = new Metodos();
+        Funcionario f = met.busca(cpf);
+        if (f.getFuncao().equals("Vendedor")) {
+            new MenuFuncionario(cpf).show();
+        } else {
+            new MenuGerente(cpf).show();
+        }
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -195,7 +204,7 @@ public class TelaCancelarReserva extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCancelarReserva().setVisible(true);
+                new TelaCancelarReserva("").setVisible(true);
             }
         });
     }

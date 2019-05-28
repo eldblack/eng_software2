@@ -5,6 +5,9 @@
  */
 package interfacelanchonete;
 
+import metodos.Metodos;
+import pessoas.Funcionario;
+
 /**
  *
  * @author Pedro
@@ -14,7 +17,9 @@ public class AlterarPedido extends javax.swing.JFrame {
     /**
      * Creates new form AlterarPedido
      */
-    public AlterarPedido() {
+    String cpf;
+    public AlterarPedido(String cpf) {
+        this.cpf = cpf;
         initComponents();
     }
 
@@ -85,6 +90,11 @@ public class AlterarPedido extends javax.swing.JFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/icons8_return_20px_2.png"))); // NOI18N
         jButton1.setText("Voltar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/icons8_search_20px.png"))); // NOI18N
         jButton2.setText("Buscar");
@@ -132,6 +142,18 @@ public class AlterarPedido extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Metodos met = new Metodos();
+        Funcionario f = met.busca(cpf);
+        if (f.getFuncao().equals("Vendedor")) {
+            new MenuFuncionario(cpf).show();
+        } else {
+            new MenuGerente(cpf).show();
+        }
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -162,7 +184,7 @@ public class AlterarPedido extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AlterarPedido().setVisible(true);
+                new AlterarPedido("").setVisible(true);
             }
         });
     }

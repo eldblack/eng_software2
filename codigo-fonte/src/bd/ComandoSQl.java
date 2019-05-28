@@ -129,8 +129,9 @@ public enum ComandoSQl {
     
     BUSCAR_ITENS_VENDA("SELECT * FROM tbl_prod_venda WHERE idVenda = ?;"),
     REMOVER_VENDA("DELETE FROM tbl_vendas WHERE idVenda = ?;"),
+    REMOVER_ACOMPANAMENTO("DELETE FROM tbl_acompanhamento WHERE id = ?;"),
+    REMOVER_LANCHE("DELETE FROM tbl_lanche WHERE id = ?;"),
     REMOVER_ITENS_VENDA("DELETE FROM tbl_prod_venda WHERE idVenda = ?;");
-    
     
     public String comando;
     

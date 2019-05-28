@@ -114,8 +114,70 @@ public class Cadastro {
         }
     }
     
+    public void removerFuncionario(int codigo){
+        ConexaoSQlite conexaoSQlite = new ConexaoSQlite();
+        conexaoSQlite.conectar();
+        PreparedStatement preparedStatement=null;
+        String sql = ComandoSQl.REMOVER_FUNCIONARIO.comando;
+        try{
+            preparedStatement=conexaoSQlite.criarPreparedStatement(sql);
+            preparedStatement.setInt(1, codigo);
+            preparedStatement.executeUpdate();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,"Erro ao Remover Funcionario", "Erro",JOptionPane.WARNING_MESSAGE);
+        }finally {
+            try{
+                preparedStatement.close();
+                conexaoSQlite.desconectar();
+            }catch(SQLException ex){
+                JOptionPane.showMessageDialog(null,"Erro ao Remover Funcionario", "Erro",JOptionPane.WARNING_MESSAGE);
+            }            
+        }
+    }
+    
+    public void removerAcomapnhamento(int codigo){
+        ConexaoSQlite conexaoSQlite = new ConexaoSQlite();
+        conexaoSQlite.conectar();
+        PreparedStatement preparedStatement=null;
+        String sql = ComandoSQl.REMOVER_ACOMPANAMENTO.comando;
+        try{
+            preparedStatement=conexaoSQlite.criarPreparedStatement(sql);
+            preparedStatement.setInt(1, codigo);
+            preparedStatement.executeUpdate();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,"Erro ao Remover Funcionario", "Erro",JOptionPane.WARNING_MESSAGE);
+        }finally {
+            try{
+                preparedStatement.close();
+                conexaoSQlite.desconectar();
+            }catch(SQLException ex){
+                JOptionPane.showMessageDialog(null,"Erro ao Remover Funcionario", "Erro",JOptionPane.WARNING_MESSAGE);
+            }            
+        }
+    }
+    
+    public void removerLanche(int codigo){
+        ConexaoSQlite conexaoSQlite = new ConexaoSQlite();
+        conexaoSQlite.conectar();
+        PreparedStatement preparedStatement=null;
+        String sql = ComandoSQl.REMOVER_LANCHE.comando;
+        try{
+            preparedStatement=conexaoSQlite.criarPreparedStatement(sql);
+            preparedStatement.setInt(1, codigo);
+            preparedStatement.executeUpdate();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,"Erro ao Remover Lanche", "Erro",JOptionPane.WARNING_MESSAGE);
+        }finally {
+            try{
+                preparedStatement.close();
+                conexaoSQlite.desconectar();
+            }catch(SQLException ex){
+                JOptionPane.showMessageDialog(null,"Erro ao Remover Lanche", "Erro",JOptionPane.WARNING_MESSAGE);
+            }            
+        }
+    }
+    
     public void cadastrarPedido(Pedido pedido){
-        
         ConexaoSQlite conexoaSQlite = new ConexaoSQlite();
         CriarBancoSQLite criarBancoSQlite = new CriarBancoSQLite(conexoaSQlite);
         criarBancoSQlite.criarTabelaPedido();

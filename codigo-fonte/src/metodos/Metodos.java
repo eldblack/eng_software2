@@ -20,7 +20,6 @@ import pessoas.Funcionario;
 public class Metodos {
        
     public Funcionario busca(String cpf){
-        System.out.println(cpf);
         Funcionario f = new Funcionario();
         ConexaoSQlite conexaoSqlite = new ConexaoSQlite();
         conexaoSqlite.conectar();

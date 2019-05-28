@@ -5,6 +5,10 @@
  */
 package interfacelanchonete;
 
+import javax.swing.JOptionPane;
+import metodos.Metodos;
+import pessoas.Funcionario;
+
 /**
  *
  * @author Pedro
@@ -14,7 +18,9 @@ public class Cardapio extends javax.swing.JFrame {
     /**
      * Creates new form CadastrarPedido
      */
-    public Cardapio() {
+    String cpf;
+    public Cardapio(String cpf) {
+        this.cpf = cpf;
         initComponents();
     }
 
@@ -137,8 +143,14 @@ public class Cardapio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new MenuFuncionario().setVisible(true);
-        this.setVisible(false);
+        Metodos met = new Metodos();
+        Funcionario f = met.busca(cpf);
+        if (f.getFuncao().equals("Vendedor")) {
+            new MenuFuncionario(cpf).show();
+        } else {
+            new MenuGerente(cpf).show();
+        }
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -172,7 +184,7 @@ public class Cardapio extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Cardapio().setVisible(true);
+                new Cardapio("").setVisible(true);
             }
         });
     }

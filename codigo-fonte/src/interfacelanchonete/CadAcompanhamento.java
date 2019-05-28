@@ -10,6 +10,8 @@ import cardapio.Acompanhamento;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
+import metodos.Metodos;
+import pessoas.Funcionario;
 
 /**
  *
@@ -20,7 +22,9 @@ public class CadAcompanhamento extends javax.swing.JFrame {
     /**
      * Creates new form CadeAcompanhamento
      */
-    public CadAcompanhamento() {
+    String cpf;
+    public CadAcompanhamento(String cpf) {
+        this.cpf = cpf;
         Image icone = null;
         URL caminhoIcone = getClass().getResource("/icone/logo-principal.png");
         icone  = Toolkit.getDefaultToolkit().getImage(caminhoIcone);
@@ -183,8 +187,14 @@ public class CadAcompanhamento extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        MenuFuncionario menu = new MenuFuncionario();
-        menu.setVisible(true);
+        Metodos met = new Metodos();
+        System.out.println("cpf: "+cpf);
+        Funcionario f = met.busca(cpf);
+        if (f.getFuncao().equals("Vendedor")) {
+            new MenuFuncionario(cpf).show();
+        } else {
+            new MenuGerente(cpf).show();
+        }
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -225,7 +235,7 @@ public class CadAcompanhamento extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadAcompanhamento().setVisible(true);
+                new CadAcompanhamento("").setVisible(true);
             }
         });
     }

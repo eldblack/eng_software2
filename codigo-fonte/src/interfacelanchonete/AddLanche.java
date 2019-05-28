@@ -7,6 +7,8 @@ package interfacelanchonete;
 
 import cadastro.CadLanche;
 import cardapio.Lanche;
+import metodos.Metodos;
+import pessoas.Funcionario;
 
 /**
  *
@@ -17,7 +19,9 @@ public class AddLanche extends javax.swing.JFrame {
     /**
      * Creates new form Lanche
      */
-    public AddLanche() {
+    String cpf;
+    public AddLanche(String cpf) {
+        this.cpf=cpf;
         initComponents();
     }
 
@@ -191,7 +195,13 @@ public class AddLanche extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new MenuFuncionario().setVisible(true);
+        Metodos met = new Metodos();
+        Funcionario f = met.busca(cpf);
+        if (f.getFuncao().equals("Vendedor")) {
+            new MenuFuncionario(cpf).show();
+        } else {
+            new MenuGerente(cpf).show();
+        }
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -228,7 +238,7 @@ public class AddLanche extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddLanche().setVisible(true);
+                new AddLanche("").setVisible(true);
             }
         });
     }

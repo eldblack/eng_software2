@@ -18,8 +18,9 @@ public class MenuGerente extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
-    
-    public MenuGerente() {
+    String cpf;
+    public MenuGerente(String cpf) {
+        this.cpf = cpf;
         initComponents();
         
         Image icone = null;
@@ -43,9 +44,15 @@ public class MenuGerente extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCad = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
-        menuFunc = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        Lanches = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        menuFunc = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -80,29 +87,65 @@ public class MenuGerente extends javax.swing.JFrame {
 
         menuCad.setText("Cadastro");
 
-        jMenuItem7.setText("Acompanhamento");
+        jMenu5.setText("Acompanhamento");
+
+        jMenuItem7.setText("Cadastro de Acompanhamento");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem7ActionPerformed(evt);
             }
         });
-        menuCad.add(jMenuItem7);
+        jMenu5.add(jMenuItem7);
 
-        menuFunc.setText("Funcionário");
-        menuFunc.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem11.setText("Remover Acompanhamento");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuFuncActionPerformed(evt);
+                jMenuItem11ActionPerformed(evt);
             }
         });
-        menuCad.add(menuFunc);
+        jMenu5.add(jMenuItem11);
 
-        jMenuItem6.setText("Lanches");
+        menuCad.add(jMenu5);
+
+        Lanches.setText("Lanches");
+
+        jMenuItem6.setText("Cadastro de Lanches");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
             }
         });
-        menuCad.add(jMenuItem6);
+        Lanches.add(jMenuItem6);
+
+        jMenuItem10.setText("Remover Lanches");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        Lanches.add(jMenuItem10);
+
+        menuCad.add(Lanches);
+
+        jMenu4.setText("Funcionario");
+
+        jMenuItem9.setText("Remover Funcionario");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem9);
+
+        menuFunc.setText("Cadastrar Funcionário");
+        menuFunc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuFuncActionPerformed(evt);
+            }
+        });
+        jMenu4.add(menuFunc);
+
+        menuCad.add(jMenu4);
 
         jMenuBar1.add(menuCad);
 
@@ -187,42 +230,42 @@ public class MenuGerente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        new Cardapio().setVisible(true);
+        new Cardapio(cpf).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        new CadPedido().setVisible(true);
+        new CadPedido(cpf).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        new BuscarPedido().setVisible(true);
+        new BuscarPedido(cpf).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        new AlterarPedido().setVisible(true);
+        new AlterarPedido(cpf).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void menuFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFuncActionPerformed
         // TODO add your handling code here:
-           TelaCadastro telac = new TelaCadastro();
+           TelaCadastro telac = new TelaCadastro(cpf);
            telac.setVisible(true);
            this.dispose();
         
     }//GEN-LAST:event_menuFuncActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        AddLanche lanche = new AddLanche();
+        AddLanche lanche = new AddLanche(cpf);
         lanche.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
-        CadAcompanhamento cadAcomp = new CadAcompanhamento();
+        CadAcompanhamento cadAcomp = new CadAcompanhamento(cpf);
         cadAcomp.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
@@ -233,17 +276,38 @@ public class MenuGerente extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        TelaReserva telaReserva = new TelaReserva();
+        TelaReserva telaReserva = new TelaReserva(cpf);
         telaReserva.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
-        TelaCancelarReserva telacr = new TelaCancelarReserva();
+        TelaCancelarReserva telacr = new TelaCancelarReserva(cpf);
         telacr.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+        RemoverFuncionario rf = new RemoverFuncionario(cpf);
+        rf.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here
+        RemoverLanche rl = new RemoverLanche(cpf);
+        rl.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+        RemoverAcompanhamento ra = new RemoverAcompanhamento(cpf);
+        ra.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,18 +337,23 @@ public class MenuGerente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuGerente().setVisible(true);
+                new MenuGerente("").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu Lanches;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -292,6 +361,7 @@ public class MenuGerente extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu menuCad;
     private javax.swing.JMenuItem menuFunc;

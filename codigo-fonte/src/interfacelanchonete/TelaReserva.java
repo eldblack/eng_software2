@@ -7,6 +7,8 @@ package interfacelanchonete;
 
 import cadastro.Cadastro;
 import classes.Reserva;
+import metodos.Metodos;
+import pessoas.Funcionario;
 
 /**
  *
@@ -17,7 +19,9 @@ public class TelaReserva extends javax.swing.JFrame {
     /**
      * Creates new form TelaReserva
      */
-    public TelaReserva() {
+    String cpf;
+    public TelaReserva(String cpf) {
+        this.cpf = cpf;
         initComponents();
     }
 
@@ -290,9 +294,14 @@ public class TelaReserva extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        dispose();
-        MenuFuncionario menu = new MenuFuncionario();
-        menu.show();
+        Metodos met = new Metodos();
+        Funcionario f = met.busca(cpf);
+        if (f.getFuncao().equals("Vendedor")) {
+            new MenuFuncionario(cpf).show();
+        } else {
+            new MenuGerente(cpf).show();
+        }
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -325,7 +334,7 @@ public class TelaReserva extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaReserva().setVisible(true);
+                new TelaReserva("").setVisible(true);
             }
         });
     }

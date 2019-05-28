@@ -217,21 +217,18 @@ public class Login extends javax.swing.JFrame {
 
     private void buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActionPerformed
         
-     Metodos met = new Metodos();
-     Funcionario f = met.busca(txtLogin.getText());
-         if(met.verifca(f, txtSenha2.getText()) == 1){
-           if(f.getFuncao().equals("Vendedor")){
-               new MenuFuncionario().show();
-            }else{
-             new MenuGerente().show();
+        Metodos met = new Metodos();
+        Funcionario f = met.busca(txtLogin.getText());
+        if (met.verifca(f, txtSenha2.getText()) == 1) {
+            if (f.getFuncao().equals("Vendedor")) {
+                new MenuFuncionario(txtLogin.getText()).show();
+            } else {
+                new MenuGerente(txtLogin.getText()).show();
             }
-          this.dispose();
-        }else{
+            this.dispose();
+        } else {
             JOptionPane.showMessageDialog(null, "CPF OU SENHA INCORRETOS !");
         }
-        
-
-       
 
     }//GEN-LAST:event_buttonActionPerformed
 
@@ -249,9 +246,9 @@ public class Login extends javax.swing.JFrame {
      Funcionario f = met.busca(txtLogin.getText());
          if(met.verifca(f, txtSenha2.getText()) == 1){
            if(f.getFuncao().equals("Vendedor")){
-               new MenuFuncionario().show();
+               new MenuFuncionario(txtLogin.getText()).show();
             }else{
-             new MenuGerente().show();
+             new MenuGerente(txtLogin.getText()).show();
             }
           this.dispose();
         }else{

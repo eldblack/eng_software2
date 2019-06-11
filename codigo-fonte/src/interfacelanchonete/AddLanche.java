@@ -7,6 +7,7 @@ package interfacelanchonete;
 
 import cadastro.CadLanche;
 import cardapio.Lanche;
+import javax.swing.JOptionPane;
 import metodos.Metodos;
 import pessoas.Funcionario;
 
@@ -190,8 +191,13 @@ public class AddLanche extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        CadLanche lanche = new CadLanche();
-        lanche.cadastrarLanche(new Lanche(txtNome.getText(), Double.parseDouble(txtPreco.getText()), Integer.parseInt(txtQtd.getText())));
+        if(verificar()){
+            CadLanche lanche = new CadLanche();
+            lanche.cadastrarLanche(new Lanche(txtNome.getText(), Double.parseDouble(txtPreco.getText()), Integer.parseInt(txtQtd.getText())));
+        }else{
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -241,6 +247,14 @@ public class AddLanche extends javax.swing.JFrame {
                 new AddLanche("").setVisible(true);
             }
         });
+    }
+    
+    public boolean verificar(){
+        if(txtNome.getText().equals("") || txtPreco.getText().equals("") || txtQtd.getText().equals("")){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

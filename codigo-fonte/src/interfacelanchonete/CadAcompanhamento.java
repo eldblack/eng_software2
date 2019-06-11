@@ -10,6 +10,7 @@ import cardapio.Acompanhamento;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
+import javax.swing.JOptionPane;
 import metodos.Metodos;
 import pessoas.Funcionario;
 
@@ -200,8 +201,13 @@ public class CadAcompanhamento extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        CadLanche cad = new CadLanche();
-        cad.cadastrarAcomp(new Acompanhamento(txtTipo.getText(), Double.parseDouble(txtValor.getText()), Integer.parseInt(txtQtd.getText())));
+        if(verificar()){
+            CadLanche cad = new CadLanche();
+            cad.cadastrarAcomp(new Acompanhamento(txtTipo.getText(), Double.parseDouble(txtValor.getText()), Integer.parseInt(txtQtd.getText())));
+        }else{
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -238,6 +244,14 @@ public class CadAcompanhamento extends javax.swing.JFrame {
                 new CadAcompanhamento("").setVisible(true);
             }
         });
+    }
+    
+    public boolean verificar(){
+        if(txtValor.getText().equals("") || txtTipo.getText().equals("") || txtValor.getText().equals("")){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

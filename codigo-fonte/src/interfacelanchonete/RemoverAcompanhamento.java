@@ -135,9 +135,9 @@ public class RemoverAcompanhamento extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -154,10 +154,10 @@ public class RemoverAcompanhamento extends javax.swing.JFrame {
             int codigo = (int)tabelaAcomp.getValueAt(linha, 0);
             Cadastro cad = new Cadastro();
             cad.removerAcomapnhamento(codigo);
-            JOptionPane.showMessageDialog(null, "Funcionario Excluido", "", JOptionPane.WIDTH);
+            JOptionPane.showMessageDialog(null, "Acompanhante Removido", "", JOptionPane.WIDTH);
             mostrar();
         }catch(ArrayIndexOutOfBoundsException e){
-            JOptionPane.showMessageDialog(null, "Selecione um Funcionario", "Erro", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Selecione um Acompanhante", "Erro", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

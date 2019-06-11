@@ -40,6 +40,8 @@ public class Cadastro {
             int resultado= preparedStatement.executeUpdate();
             if(resultado!=1){
                 JOptionPane.showMessageDialog(null,"Erro ao adicionar Vendedor", "Erro",JOptionPane.WARNING_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
             }
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,"Falha ao inserir Vendedor", "Erro",JOptionPane.WARNING_MESSAGE);

@@ -171,7 +171,7 @@ public class RemoverLanche extends javax.swing.JFrame {
             int codigo = (int)tabelaLanche.getValueAt(linha, 0);
             Cadastro cad = new Cadastro();
             cad.removerLanche(codigo);
-            JOptionPane.showMessageDialog(null, "Lanche Excluido", "", JOptionPane.WIDTH);
+            JOptionPane.showMessageDialog(null, "Lanche Removido", "", JOptionPane.WIDTH);
             mostrar();
         }catch(ArrayIndexOutOfBoundsException e){
             JOptionPane.showMessageDialog(null, "Selecione um Lanche", "Erro", JOptionPane.WARNING_MESSAGE);

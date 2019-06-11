@@ -6,6 +6,7 @@
 package interfacelanchonete;
 
 import cadastro.Cadastro;
+import javax.swing.JOptionPane;
 import metodos.Metodos;
 import pessoas.Funcionario;
 
@@ -278,9 +279,13 @@ public class TelaCadastro extends javax.swing.JFrame {
         }else if(bt2.isSelected()){
             funcao = "Gerente";
         }
-        Cadastro cadastro = new Cadastro();
-        cadastro.cadastroVendedor(new Funcionario(funcao, Double.parseDouble(txtSalario.getText()), txtSenha.getText(), txtNome.getText(), txtCpf.getText(), txtRG.getText(), txtFone.getText()));
-
+        if(verificar()){
+            Cadastro cadastro = new Cadastro();
+            cadastro.cadastroVendedor(new Funcionario(funcao, Double.parseDouble(txtSalario.getText()), txtSenha.getText(), txtNome.getText(), txtCpf.getText(), txtRG.getText(), txtFone.getText()));
+        }else{
+            JOptionPane.showMessageDialog(this,"Preencha todos os campos");
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void bt2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt2ActionPerformed
@@ -323,6 +328,14 @@ public class TelaCadastro extends javax.swing.JFrame {
                 new TelaCadastro("").setVisible(true);
             }
         });
+    }
+    
+    public boolean verificar(){
+        if(txtCpf.getText().equals("") || txtFone.getText().equals("") || txtNome.getText().equals("") || txtRG.getText().equals("") || txtSalario.getText().equals("") || txtSenha.getText().equals("")){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

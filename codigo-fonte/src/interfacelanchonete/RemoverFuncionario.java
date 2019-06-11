@@ -165,10 +165,10 @@ public class RemoverFuncionario extends javax.swing.JFrame {
             int codigo = (int)tabelaFunc.getValueAt(linha, 0);
             Cadastro cad = new Cadastro();
             cad.removerFuncionario(codigo);
-            JOptionPane.showMessageDialog(null, "Acompanhamento Removido", "", JOptionPane.WIDTH);
+            JOptionPane.showMessageDialog(null, "Funcionario Removido", "", JOptionPane.WIDTH);
             mostrar();
         }catch(ArrayIndexOutOfBoundsException e){
-            JOptionPane.showMessageDialog(null, "Selecione um Acompanhamento", "Erro", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Selecione um Funcionario", "Erro", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

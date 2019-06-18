@@ -28,6 +28,7 @@ public class RemoverLanche extends javax.swing.JFrame {
     public RemoverLanche(String cpf) {
         this.cpf = cpf;
         initComponents();
+        this.setLocationRelativeTo(null);
         mostrar();
     }
 

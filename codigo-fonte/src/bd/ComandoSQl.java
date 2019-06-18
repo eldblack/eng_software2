@@ -11,7 +11,10 @@ package bd;
  */
 public enum ComandoSQl {
     BUSCAR_PRODUTO("SELECT * FROM tbl_produto WHERE id = ?;"),
-    
+    BUSCAR_LANCHE("SELECT * FROM tbl_lanche WHERE id = ?;"),
+    BUSCAR_PEDIDO1("SELECT * FROM tbl_pedido WHERE cpf = ?;"),
+    BUSCAR_PEDIDO2("SELECT * FROM tbl_pedido WHERE id = ?;"),
+    BUSCAR_ACOMP("SELECT * FROM tbl_acompanhamento WHERE id = ?;"),
     MOSTRAR_LANCHE("SELECT * FROM tbl_lanche"),
     
     MOSTRAR_ACOMPANHAMENTO("SELECT * FROM tbl_acompanhamento"),
@@ -33,22 +36,34 @@ public enum ComandoSQl {
                 + "cpf,"
                 + "telefone,"
                 + "RG,"
-                + "endereco,"
-                + "numCartao,"
                 + "data,"
                 + "hora,"
                 + "numMesa,"
+                +"endereco,"
+                + "numCartao,"
                 + "numPessoa"
                 + ")VALUES(?,?,?,?,?,?,?,?,?,?)"
+                + ";"),
+    ADD_ENTREGA("INSERT INTO tbl_entrega"
+                + "("
+                + "nome,"
+                + "cpf,"
+                + "telefone,"
+                + "RG,"
+                + "endereco"
+                + ")VALUES(?,?,?,?,?)"
                 + ";"),
      ADD_PEDIDO("INSERT INTO tbl_pedido"
                 + "("
                 + "nome,"
-                + "lanche,"
-                + "acompanhante,"
-                + "valor"
-                + ")VALUES(?,?,?,?)"
+                + "preco,"
+                + "qtd,"
+                + "tipo,"
+                + "cpf,"
+                + "id_Lanche_Acomp"
+                + ")VALUES(?,?,?,?,?,?)"
                 + ";"),
+    REMOVER_PEDIDO("DELETE FROM tbl_pedido WHERE cpf = ?;"),
     
     BUSCAR_FUNCUIONARIO("SELECT * FROM tbl_funcionario WHERE cpf = ?;"),
     
@@ -80,8 +95,7 @@ public enum ComandoSQl {
                 + "Endereco = ?"
                 + "WHERE id = ?;"),
     REMOVER_RESERVA("DELETE FROM tbl_reserva WHERE id = ?;"),
-    
-    REMOVER_PEDIDO("DELETE FROM tbl_pedido WHERE id = ?;"),
+    REMOVER_ENTREGA("DELETE FROM tbl_entrega WHERE id = ?;"),
     
     ADD_LANCHE("INSERT INTO tbl_lanche"
                 + "("
@@ -90,6 +104,7 @@ public enum ComandoSQl {
                 + "qtd"
                 + ")VALUES(?,?,?)"
                 + ";"),
+
     ADD_ACOMPANHAMENTO("INSERT INTO tbl_acompanhamento"
                 + "("
                 + "tipo,"
@@ -131,7 +146,10 @@ public enum ComandoSQl {
     REMOVER_VENDA("DELETE FROM tbl_vendas WHERE idVenda = ?;"),
     REMOVER_ACOMPANAMENTO("DELETE FROM tbl_acompanhamento WHERE id = ?;"),
     REMOVER_LANCHE("DELETE FROM tbl_lanche WHERE id = ?;"),
-    REMOVER_ITENS_VENDA("DELETE FROM tbl_prod_venda WHERE idVenda = ?;");
+    REMOVER_ITENS_VENDA("DELETE FROM tbl_prod_venda WHERE idVenda = ?;"),
+    ALTERAR_LANCHE("UPDATE tbl_lanche SET nome=?,preco=?,qtd=? WHERE id=?;"),
+    ALTERAR_ACOMP("UPDATE tbl_acompanhamento SET tipo=?,valor=?,qtd=? WHERE id=?;"),
+    ALTERAR_PEDIDO("UPDATE tbl_pedido SET nome=?, preco=?,qtd=?,tipo=?,cpf=?,id_Lanche_Acomp=? WHERE id=?;");
     
     public String comando;
     

@@ -28,6 +28,7 @@ public class RemoverFuncionario extends javax.swing.JFrame {
     public RemoverFuncionario(String cpf) {
         this.cpf = cpf;
         initComponents();
+        this.setLocationRelativeTo(null);
         mostrar();
     }
 

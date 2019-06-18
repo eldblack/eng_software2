@@ -6,7 +6,7 @@
 package interfacelanchonete;
 
 import cadastro.CadLanche;
-import cardapio.Acompanhamento;
+import cardapio.AcompanhamentoLixo;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
@@ -31,6 +31,7 @@ public class CadAcompanhamento extends javax.swing.JFrame {
         icone  = Toolkit.getDefaultToolkit().getImage(caminhoIcone);
         this.setIconImage(icone);
         initComponents();
+         this.setLocationRelativeTo(null);
     }
 
     /**
@@ -62,6 +63,8 @@ public class CadAcompanhamento extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel4.setText("Acompanhamento");
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/icons8_return_20px_2.png"))); // NOI18N
         jButton1.setText("Voltar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -78,6 +81,7 @@ public class CadAcompanhamento extends javax.swing.JFrame {
             }
         });
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Infomações do Acompanhamento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
         jLabel2.setText("Valor:");
@@ -203,7 +207,7 @@ public class CadAcompanhamento extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(verificar()){
             CadLanche cad = new CadLanche();
-            cad.cadastrarAcomp(new Acompanhamento(txtTipo.getText(), Double.parseDouble(txtValor.getText()), Integer.parseInt(txtQtd.getText())));
+            cad.cadastrarAcomp(new AcompanhamentoLixo(txtTipo.getText(), Double.parseDouble(txtValor.getText()), Integer.parseInt(txtQtd.getText())));
         }else{
             JOptionPane.showMessageDialog(null, "Preencha todos os campos");
         }

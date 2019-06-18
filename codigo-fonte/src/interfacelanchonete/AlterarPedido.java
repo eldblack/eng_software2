@@ -5,6 +5,19 @@
  */
 package interfacelanchonete;
 
+import cadastro.Cadastro;
+import cadastro.Cadastro;
+import cardapio.Acompanhamento;
+import cardapio.AcompanhamentoLixo;
+import cardapio.Lanche;
+import cardapio.Lanche;
+import classes.Mostrar;
+import classes.Pedido;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import metodos.Metodos;
 import pessoas.Funcionario;
 
@@ -18,9 +31,17 @@ public class AlterarPedido extends javax.swing.JFrame {
      * Creates new form AlterarPedido
      */
     String cpf;
-    public AlterarPedido(String cpf) {
+    int qtdPedidos=0;
+    int qtdOriginal;
+    int idProduto;
+    String tipoP;
+    public AlterarPedido(String cpf, String cpfCliente) {
         this.cpf = cpf;
         initComponents();
+        if(!cpfCliente.equals("")){
+            txtCpf.setText(cpfCliente);
+            buscarpedido();
+        }
     }
 
     /**
@@ -36,8 +57,15 @@ public class AlterarPedido extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaPedido = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        txtCpf = new javax.swing.JFormattedTextField();
+        jButton3 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        txtQTD = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -48,16 +76,13 @@ public class AlterarPedido extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Buscar Pedido");
+        jLabel1.setText("Alterar Pedido");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -67,26 +92,43 @@ public class AlterarPedido extends javax.swing.JFrame {
                 .addGap(23, 23, 23))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaPedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Id", "Nome", "Preço", "Qtd"
+                "Id", "Nome", "Preço", "Qtd", "Tipo", "CPF", "Id Lanche/Acomp"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tabelaPedido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaPedidoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelaPedido);
+        if (tabelaPedido.getColumnModel().getColumnCount() > 0) {
+            tabelaPedido.getColumnModel().getColumn(1).setResizable(false);
+            tabelaPedido.getColumnModel().getColumn(2).setResizable(false);
+            tabelaPedido.getColumnModel().getColumn(3).setResizable(false);
+            tabelaPedido.getColumnModel().getColumn(4).setResizable(false);
+            tabelaPedido.getColumnModel().getColumn(5).setResizable(false);
+            tabelaPedido.getColumnModel().getColumn(6).setResizable(false);
+        }
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/icons8_return_20px_2.png"))); // NOI18N
         jButton1.setText("Voltar");
@@ -96,35 +138,114 @@ public class AlterarPedido extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/icons8_search_20px.png"))); // NOI18N
-        jButton2.setText("Buscar");
+        try {
+            txtCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/icons8_search_20px.png"))); // NOI18N
+        jButton3.setText("Buscar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("INFORME O CPF DO CLIENTE QUE REALIZOU O PEDIDO");
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Alterar Dados"));
+
+        jLabel3.setText("Alterar a quantidade do produto selecionado");
+
+        jButton4.setText("Adicionar lanche/acompanhamento");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Alterar Quantidade");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtQTD, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67)
+                        .addComponent(jButton2)
+                        .addGap(56, 56, 56)
+                        .addComponent(jButton4)))
+                .addContainerGap(73, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtQTD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton2))
+                .addContainerGap(51, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(358, 358, 358))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 807, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(23, 23, 23))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(285, 285, 285)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(358, 358, 358)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(91, 91, 91)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addGap(11, 11, 11)
+                .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(170, 170, 170)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(21, 21, 21))
         );
 
@@ -154,6 +275,122 @@ public class AlterarPedido extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        buscarpedido();
+    }//GEN-LAST:event_jButton3ActionPerformed
+    
+    private void buscarpedido(){
+        try {
+            // TODO add your handling code here:
+            ArrayList<Pedido> pedidos;
+            Pedido pedido = new Pedido();
+            pedidos = pedido.buscarPedido(txtCpf.getText());
+            if(pedidos.size()!=0){
+                DefaultTableModel tModel = (DefaultTableModel) tabelaPedido.getModel();
+                tModel.setRowCount(pedidos.size());
+                qtdPedidos = pedidos.size();
+                for(int i=0; i<pedidos.size(); i++){
+                    tabelaPedido.setValueAt(pedidos.get(i).getId(), i, 0);
+                    tabelaPedido.setValueAt(pedidos.get(i).getNome(), i, 1);
+                    tabelaPedido.setValueAt(pedidos.get(i).getPreco(), i, 2);
+                    tabelaPedido.setValueAt(pedidos.get(i).getQtd(), i, 3);
+                    tabelaPedido.setValueAt(pedidos.get(i).getTipo(), i, 4);
+                    tabelaPedido.setValueAt(pedidos.get(i).getCpf(), i, 5);
+                    tabelaPedido.setValueAt(pedidos.get(i).getID_lanche_Acomp(), i, 6);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BuscarPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        CadPedido cadP = null;
+        try {
+            cadP = new CadPedido(cpf,txtCpf.getText());
+        } catch (SQLException ex) {
+            Logger.getLogger(AlterarPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cadP.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void tabelaPedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPedidoMouseClicked
+        // TODO add your handling code here:
+        txtQTD.setText(String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 3)));
+        qtdOriginal=Integer.parseInt(String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 3)));
+        idProduto = Integer.parseInt(String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 6)));
+        tipoP = String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 4));
+    }//GEN-LAST:event_tabelaPedidoMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Pedido pedido =  new Pedido();
+        if(tipoP.equals("lanche")){
+            Lanche lanche = new Lanche();
+            lanche = lanche.buscarLanche(idProduto);
+            if(qtdOriginal>Integer.parseInt(txtQTD.getText())){
+                Cadastro cad = new Cadastro();
+                int valorAdd = qtdOriginal - Integer.parseInt(txtQTD.getText());
+                lanche.setQtd(valorAdd+lanche.getQtd());
+                System.out.println(lanche.getQtd());
+                cad.alterarLanche(lanche);
+                try {
+                    pedido.buscarPedidoIP(Integer.parseInt(String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 0))));
+                    pedido.setQtd(pedido.getQtd()-valorAdd);
+                    cad.alterarPedido(pedido);
+                } catch (SQLException ex) {
+                    Logger.getLogger(AlterarPedido.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else if(qtdOriginal<Integer.parseInt(txtQTD.getText())){
+                Cadastro cad = new Cadastro();
+                int valorSub = Integer.parseInt(txtQTD.getText())-qtdOriginal;
+                lanche.setQtd(lanche.getQtd()-valorSub);
+                System.out.println(lanche.getQtd());
+                cad.alterarLanche(lanche);
+                try {
+                    pedido = pedido.buscarPedidoIP(Integer.parseInt(String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 0))));
+                    pedido.setQtd(Integer.parseInt(txtQTD.getText()));
+                    System.out.println("deidid: "+pedido.getId());
+                    cad.alterarPedido(pedido);
+                } catch (SQLException ex) {
+                    Logger.getLogger(AlterarPedido.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }else if(tipoP.equals("acomp")){
+            Acompanhamento acomp = new Acompanhamento();
+            acomp = acomp.buscarAcomp(idProduto);
+            if(qtdOriginal>Integer.parseInt(txtQTD.getText())){
+                Cadastro cad = new Cadastro();
+                int valorAdd = qtdOriginal - Integer.parseInt(txtQTD.getText());
+                acomp.setQtd(valorAdd+acomp.getQtd());
+                System.out.println(acomp.getQtd());
+                cad.alterarAcomp(acomp);
+                try {
+                    pedido.buscarPedidoIP(Integer.parseInt(String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 0))));
+                    pedido.setQtd(pedido.getQtd()-valorAdd);
+                    cad.alterarPedido(pedido);
+                } catch (SQLException ex) {
+                    Logger.getLogger(AlterarPedido.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else if(qtdOriginal<Integer.parseInt(txtQTD.getText())){
+                Cadastro cad = new Cadastro();
+                int valorSub = Integer.parseInt(txtQTD.getText())-qtdOriginal;
+                acomp.setQtd(acomp.getQtd()-valorSub);
+                System.out.println(acomp.getQtd());
+                cad.alterarAcomp(acomp);
+                try {
+                    pedido.buscarPedidoIP(Integer.parseInt(String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 0))));
+                    pedido.setQtd(pedido.getQtd()+valorSub);
+                    cad.alterarPedido(pedido);
+                } catch (SQLException ex) {
+                    Logger.getLogger(AlterarPedido.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -180,11 +417,12 @@ public class AlterarPedido extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(AlterarPedido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AlterarPedido("").setVisible(true);
+                new AlterarPedido("","").setVisible(true);
             }
         });
     }
@@ -192,10 +430,17 @@ public class AlterarPedido extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabelaPedido;
+    private javax.swing.JFormattedTextField txtCpf;
+    private javax.swing.JTextField txtQTD;
     // End of variables declaration//GEN-END:variables
 }

@@ -23,6 +23,7 @@ public class TelaCadastro extends javax.swing.JFrame {
     public TelaCadastro(String cpf) {
         this.cpf=cpf;
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

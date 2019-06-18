@@ -28,6 +28,7 @@ public class TelaCancelarReserva extends javax.swing.JFrame {
     public TelaCancelarReserva(String cpf) {
         this.cpf = cpf;
         initComponents();
+        this.setLocationRelativeTo(null);
         mostrar();
     }
 

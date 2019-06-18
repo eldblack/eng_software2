@@ -18,12 +18,13 @@ import pessoas.Funcionario;
 public class AddLanche extends javax.swing.JFrame {
 
     /**
-     * Creates new form Lanche
+     * Creates new form LancheLixo
      */
     String cpf;
     public AddLanche(String cpf) {
         this.cpf=cpf;
         initComponents();
+         this.setLocationRelativeTo(null);
     }
 
     /**
@@ -50,6 +51,8 @@ public class AddLanche extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/icons8_add_20px.png"))); // NOI18N
         jButton1.setText("Adicionar");
@@ -90,6 +93,7 @@ public class AddLanche extends javax.swing.JFrame {
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Informações do Lanche", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jLabel1.setText("Nome:");

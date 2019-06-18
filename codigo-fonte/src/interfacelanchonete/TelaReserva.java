@@ -7,7 +7,12 @@ package interfacelanchonete;
 
 import cadastro.Cadastro;
 import classes.Reserva;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import metodos.Metodos;
+import metodos.VerificaChoquedeHorario;
 import pessoas.Funcionario;
 
 /**
@@ -23,6 +28,7 @@ public class TelaReserva extends javax.swing.JFrame {
     public TelaReserva(String cpf) {
         this.cpf = cpf;
         initComponents();
+         this.setLocationRelativeTo(null);
     }
 
     /**
@@ -43,22 +49,22 @@ public class TelaReserva extends javax.swing.JFrame {
         txtNome = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtData = new javax.swing.JFormattedTextField();
-        jLabel8 = new javax.swing.JLabel();
-        txtEnd = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtRG = new javax.swing.JFormattedTextField();
         txtFone = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         txtCpf = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        txtNumCartao = new javax.swing.JTextField();
         txtHora = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtMesa = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         txtNumPessoas = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        endereco = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        card = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,8 +123,6 @@ public class TelaReserva extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Endereco:");
-
         jLabel3.setText("RG:");
 
         try {
@@ -143,8 +147,6 @@ public class TelaReserva extends javax.swing.JFrame {
 
         jLabel2.setText("CPF:");
 
-        jLabel9.setText("Nº cartão:");
-
         try {
             txtHora.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
         } catch (java.text.ParseException ex) {
@@ -157,6 +159,16 @@ public class TelaReserva extends javax.swing.JFrame {
 
         jLabel10.setText("Nº Pessoas:");
 
+        txtNumPessoas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumPessoasActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Endereço do cliente:");
+
+        jLabel9.setText("Numero do Cartão:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -166,37 +178,27 @@ public class TelaReserva extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel8)
-                        .addComponent(txtNome)
-                        .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtRG, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtNumPessoas)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtNumCartao, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtRG, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                        .addComponent(txtNumPessoas))
+                    .addComponent(jLabel7)
+                    .addComponent(txtMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(endereco, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4)
-                            .addComponent(txtFone)
-                            .addComponent(jLabel6)
-                            .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(txtMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(78, 78, 78)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5)
+                    .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtFone)
+                    .addComponent(jLabel6)
+                    .addComponent(txtHora, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(jLabel9)
+                    .addComponent(card))
                 .addGap(166, 166, 166))
         );
         jPanel2Layout.setVerticalGroup(
@@ -221,32 +223,35 @@ public class TelaReserva extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtRG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNumCartao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNumPessoas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addComponent(txtNumPessoas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(endereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(card, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -290,7 +295,21 @@ public class TelaReserva extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Cadastro cadRese = new Cadastro();
-        cadRese.cadastrarReserva(new Reserva(txtData.getText(), txtHora.getText(), Integer.parseInt(txtNumPessoas.getText()), Integer.parseInt(txtMesa.getText()), txtEnd.getText(), txtNumCartao.getText(), txtNome.getText(), txtCpf.getText(), txtRG.getText(), txtFone.getText()));
+         boolean verifica = true;
+        try {
+             verifica = VerificaChoquedeHorario.verifica(new Reserva(txtData.getText(), txtHora.getText(), Integer.parseInt(txtNumPessoas.getText()), Integer.parseInt(txtMesa.getText()), txtNome.getText(), txtCpf.getText(), txtRG.getText(), txtFone.getText(),endereco.getText(),card.getText()));
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaReserva.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            if(verifica){
+            cadRese.cadastrarReserva(new Reserva(txtData.getText(), txtHora.getText(), Integer.parseInt(txtNumPessoas.getText()), Integer.parseInt(txtMesa.getText()), txtNome.getText(), txtCpf.getText(), txtRG.getText(), txtFone.getText(),endereco.getText(),card.getText()));
+            } else{
+                JOptionPane.showMessageDialog(null, "JÁ EXISTE UM CADASTRO PARA ESSA MESA NESSE HORÁRIO", "CADASTRAR MESA", JOptionPane.ERROR_MESSAGE);
+            }
+        }catch (SQLException ex) {
+            Logger.getLogger(TelaReserva.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -303,6 +322,10 @@ public class TelaReserva extends javax.swing.JFrame {
         }
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtNumPessoasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumPessoasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumPessoasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -340,6 +363,8 @@ public class TelaReserva extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField card;
+    private javax.swing.JTextField endereco;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -357,12 +382,10 @@ public class TelaReserva extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JFormattedTextField txtCpf;
     private javax.swing.JFormattedTextField txtData;
-    private javax.swing.JTextField txtEnd;
     private javax.swing.JFormattedTextField txtFone;
     private javax.swing.JFormattedTextField txtHora;
     private javax.swing.JTextField txtMesa;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtNumCartao;
     private javax.swing.JTextField txtNumPessoas;
     private javax.swing.JFormattedTextField txtRG;
     // End of variables declaration//GEN-END:variables

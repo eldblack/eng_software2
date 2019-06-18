@@ -132,10 +132,10 @@ public class CriarBancoSQLite {
                 + "cpf text NOT NULL,"
                 + "telefone text NOT NULL,"
                 + "RG text NOT NULL,"
-                + "endereco text NOT NULL,"
-                + "numCartao text,"
                 + "data text NOT NULL,"
                 + "hora text NOT NULL,"
+                + "endereco text,"
+                + "numCartao text,"
                 + "numMesa integer NOT NULL,"
                 + "numPessoa integer NOT NULL"
                 + ");";
@@ -204,6 +204,35 @@ public class CriarBancoSQLite {
             if(conectou){
                 this.conexaoSQlite.desconectar();
             }
+        }
+        
+    }
+    
+    public void criarTabelaEntrega(){
+    
+        String sql = "CREATE TABLE IF NOT EXISTS tbl_entrega"
+                + "("
+                + "id integer PRIMARY KEY AUTOINCREMENT,"
+                + "nome text NOT NULL,"
+                + "cpf text NOT NULL,"
+                + "telefone text NOT NULL,"
+                + "RG text NOT NULL,"
+                + "endereco text NOT NULL"
+                + ");";
+
+            boolean conectou = false;
+
+            try{
+                conectou=this.conexaoSQlite.conectar();
+                Statement stmt = this.conexaoSQlite.criarStatement();
+                stmt.execute(sql);
+
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,"Erro ao Criar Tabela Entrega", "Erro",JOptionPane.WARNING_MESSAGE);
+            }finally{
+                if(conectou){
+                    this.conexaoSQlite.desconectar();
+                }
         }
         
     }

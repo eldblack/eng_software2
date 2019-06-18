@@ -10,28 +10,14 @@ package pessoas;
  * @author Marcos Paulo
  */
 public class Cliente extends Pessoa{
-    private String edereco;
-    private String numeroCartao;
+    
+    
 
-    public Cliente(String edereco, String numeroCartao, String nome, String cpf, String rg, String telefone) {
+    public Cliente(String nome, String cpf, String rg, String telefone) {
         super(nome, cpf, rg, telefone);
-        this.edereco = edereco;
-        this.numeroCartao = numeroCartao;
     }
+    public Cliente(){}
+    
 
-    public String getEdereco() {
-        return edereco;
-    }
-
-    public void setEdereco(String edereco) {
-        this.edereco = edereco;
-    }
-
-    public String getNumeroCartao() {
-        return numeroCartao;
-    }
-
-    public void setNumeroCartao(String numeroCartao) {
-        this.numeroCartao = numeroCartao;
-    }
+    
 }

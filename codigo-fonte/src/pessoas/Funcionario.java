@@ -13,7 +13,7 @@ public class Funcionario extends Pessoa{
     private String funcao;
     private Double salario;
     private String senha;
-
+    private int idFunc;
     
     public Funcionario(){}
     
@@ -22,6 +22,14 @@ public class Funcionario extends Pessoa{
         this.funcao = funcao;
         this.salario = salario;
         this.senha = senha;
+    }
+
+    public int getIdFunc() {
+        return idFunc;
+    }
+
+    public void setIdFunc(int idFunc) {
+        this.idFunc = idFunc;
     }
 
     

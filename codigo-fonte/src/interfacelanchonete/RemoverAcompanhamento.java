@@ -28,6 +28,7 @@ public class RemoverAcompanhamento extends javax.swing.JFrame {
     public RemoverAcompanhamento(String cpf) {
         this.cpf = cpf;
         initComponents();
+        this.setLocationRelativeTo(null);
         mostrar();
     }
 

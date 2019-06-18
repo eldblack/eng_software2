@@ -8,7 +8,7 @@ package cadastro;
 import bd.ComandoSQl;
 import bd.ConexaoSQlite;
 import bd.CriarBancoSQLite;
-import cardapio.Acompanhamento;
+import cardapio.AcompanhamentoLixo;
 import cardapio.Lanche;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -54,7 +54,7 @@ public class CadLanche {
         }
     }
     
-    public void cadastrarAcomp(Acompanhamento acomp){
+    public void cadastrarAcomp(AcompanhamentoLixo acomp){
         ConexaoSQlite conexoaSQlite = new ConexaoSQlite();
         CriarBancoSQLite criarBancoSQlite = new CriarBancoSQLite(conexoaSQlite);
         criarBancoSQlite.criarTabelaAcompanhamento();

@@ -27,6 +27,7 @@ public class Inicio extends javax.swing.JFrame {
      */
     public Inicio() {
         initComponents();
+         this.setLocationRelativeTo(null);
         Image icone = null;
         URL caminhoIcone = getClass().getResource("/icone/logo-principal.png");
         icone  = Toolkit.getDefaultToolkit().getImage(caminhoIcone);
@@ -53,7 +54,7 @@ public class Inicio extends javax.swing.JFrame {
         setLocation(new java.awt.Point(220, 100));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 102, 0));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jButton1.setBackground(new java.awt.Color(58, 65, 84));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N

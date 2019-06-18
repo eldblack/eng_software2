@@ -5,9 +5,17 @@
  */
 package interfacelanchonete;
 
+import bd.ConexaoSQlite;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * @author Landin
@@ -22,12 +30,17 @@ public class MenuGerente extends javax.swing.JFrame {
     public MenuGerente(String cpf) {
         this.cpf = cpf;
         initComponents();
-        
+        this.setLocationRelativeTo(null);
         Image icone = null;
         URL caminhoIcone = getClass().getResource("/icone/logo-principal.png");
         icone  = Toolkit.getDefaultToolkit().getImage(caminhoIcone);
         this.setIconImage(icone);
-        initComponents();
+        qtdLanche.setText(String.valueOf(qtdLanches()));
+        qtdAcomp.setText(String.valueOf(qtdAcomps()));
+        qtdLanche.setEditable(false);
+        qtdAcomp.setEditable(false);
+        
+        
     }
     
 
@@ -42,6 +55,9 @@ public class MenuGerente extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        qtdLanche = new javax.swing.JTextField();
+        qtdAcomp = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCad = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
@@ -59,9 +75,17 @@ public class MenuGerente extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/logo-principal.png"))); // NOI18N
@@ -71,15 +95,37 @@ public class MenuGerente extends javax.swing.JFrame {
         setLocation(new java.awt.Point(220, 100));
         setResizable(false);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icone/logo-fundo.png"))); // NOI18N
+
+        qtdLanche.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        qtdLanche.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Qtd de Lanches Cadastrados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+
+        qtdAcomp.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        qtdAcomp.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Qtd de Acompanhamentos Cadastrados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 853, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(qtdAcomp, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                    .addComponent(qtdLanche))
+                .addGap(0, 56, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 457, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(129, 129, 129)
+                .addComponent(qtdLanche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(74, 74, 74)
+                .addComponent(qtdAcomp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
@@ -192,6 +238,22 @@ public class MenuGerente extends javax.swing.JFrame {
             }
         });
 
+        jMenuItem15.setText("Alterar Reserva");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem15);
+
+        jMenuItem17.setText("Buscar Reserva");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem17);
+
         jMenuItem5.setText("Cadastrar Reserva");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,10 +270,64 @@ public class MenuGerente extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem8);
 
+        jMenuItem16.setText("Exibir todas as Reservas");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem16);
+
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("Ajuda");
-        jMenuBar1.add(jMenu3);
+        jMenu6.setText("Entrega");
+        jMenu6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu6ActionPerformed(evt);
+            }
+        });
+
+        jMenuItem18.setText("Cadastrar Entrega");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem18);
+
+        jMenuItem13.setText("Buscar Entrega");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem13);
+
+        jMenuItem14.setText("Alterar Entrega");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem14);
+
+        jMenuItem12.setText("Cancelar Entrega");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem12);
+
+        jMenuBar1.add(jMenu6);
+
+        jMenu7.setText("Sair");
+        jMenu7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu7MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu7);
 
         setJMenuBar(jMenuBar1);
 
@@ -223,7 +339,7 @@ public class MenuGerente extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -235,7 +351,11 @@ public class MenuGerente extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        new CadPedido(cpf).setVisible(true);
+        try {
+            new CadPedido(cpf,"nada").setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuGerente.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -245,7 +365,7 @@ public class MenuGerente extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        new AlterarPedido(cpf).setVisible(true);
+        new AlterarPedido(cpf,"").setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -309,6 +429,51 @@ public class MenuGerente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        dispose();
+        new TelaCancelarEntrega(cpf).show();
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
+
+       
+    }//GEN-LAST:event_jMenu6ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        dispose();
+        new TelaBuscaEntrega(cpf).show();
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        dispose();
+        new AlterarEntrega(cpf).show();
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenu7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu7MouseClicked
+        dispose();
+        new Login().show();
+    }//GEN-LAST:event_jMenu7MouseClicked
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+              AlterarReserva alterar = new AlterarReserva();
+       alterar.setVisible(true);
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+      Reservas reserva = new Reservas();
+      reserva.setVisible(true);
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+      BuscarReserva buscar = new BuscarReserva();
+      buscar.setVisible(true);
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        dispose();
+        new TelaEntrega(cpf).show();
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -341,19 +506,90 @@ public class MenuGerente extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    public int qtdLanches(){
+        int qtd=0;
+        
+        
+        ConexaoSQlite conexaoSqlite = new ConexaoSQlite();
+        
+        ResultSet resultSet = null;
+        Statement statement = null;
+        conexaoSqlite.conectar();
+        String query = "SELECT * FROM tbl_lanche;";
+        statement = conexaoSqlite.criarStatement();
+        try{
+            resultSet= statement.executeQuery(query);
+            while(resultSet.next()){
+                qtd += resultSet.getFloat("qtd");
+            }
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao mostrar", "Erro", JOptionPane.WARNING_MESSAGE);
+        }finally{
+            try{
+                resultSet.close();
+                statement.close();
+                conexaoSqlite.desconectar();
+            }catch(SQLException ex){
+                JOptionPane.showMessageDialog(null, "Erro ao mostrar", "Erro", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        return qtd;
+    }
+    
+    public int qtdAcomps(){
+        int qtd=0;
+        
+        
+        ConexaoSQlite conexaoSqlite = new ConexaoSQlite();
+        
+        ResultSet resultSet = null;
+        Statement statement = null;
+        conexaoSqlite.conectar();
+        String query = "SELECT * FROM tbl_acompanhamento;";
+        statement = conexaoSqlite.criarStatement();
+        try{
+            resultSet= statement.executeQuery(query);
+            while(resultSet.next()){
+                qtd += resultSet.getFloat("qtd");
+            }
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao mostrar", "Erro", JOptionPane.WARNING_MESSAGE);
+        }finally{
+            try{
+                resultSet.close();
+                statement.close();
+                conexaoSqlite.desconectar();
+            }catch(SQLException ex){
+                JOptionPane.showMessageDialog(null, "Erro ao mostrar", "Erro", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        return qtd;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu Lanches;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -365,5 +601,7 @@ public class MenuGerente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu menuCad;
     private javax.swing.JMenuItem menuFunc;
+    private javax.swing.JTextField qtdAcomp;
+    private javax.swing.JTextField qtdLanche;
     // End of variables declaration//GEN-END:variables
 }

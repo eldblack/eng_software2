@@ -21,6 +21,7 @@ public class Metodos {
        
     public Funcionario busca(String cpf){
         Funcionario f = new Funcionario();
+        f = null;
         ConexaoSQlite conexaoSqlite = new ConexaoSQlite();
         conexaoSqlite.conectar();
         ResultSet resultSet = null;
@@ -37,20 +38,57 @@ public class Metodos {
             f.setFuncao(resultSet.getString("funcao"));
             f.setRg(resultSet.getString("RG"));
             f.setSenha(resultSet.getString("senha"));
+            f.setIdFunc(resultSet.getInt("id"));
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Erro ao Buscar Funcionario", "Erro",JOptionPane.WARNING_MESSAGE);
+            
         }finally{
             try{
                 resultSet.close();
                 preparedStatement.close();
                 conexaoSqlite.desconectar();
             }catch(SQLException ex){
-                JOptionPane.showMessageDialog(null,"Erro ao Buscar Funcionario", "Erro",JOptionPane.WARNING_MESSAGE);
+                
             }
         }
         return f;
     }
+    
+    public Funcionario buscaFunc(int id){
+        Funcionario f = new Funcionario();
+        f = null;
+        ConexaoSQlite conexaoSqlite = new ConexaoSQlite();
+        conexaoSqlite.conectar();
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement= null;
+        String sql= "SELECT *FROM tbl_funcionario WHERE id=?;";
+        try {
+            preparedStatement= conexaoSqlite.criarPreparedStatement(sql);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            f.setNome(resultSet.getString("nome"));
+            f.setCpf(resultSet.getString("cpf"));
+            f.setSalario(resultSet.getDouble("salario"));
+            f.setTelefone(resultSet.getString("telefone"));
+            f.setFuncao(resultSet.getString("funcao"));
+            f.setRg(resultSet.getString("RG"));
+            f.setSenha(resultSet.getString("senha"));
+            f.setIdFunc(resultSet.getInt("id"));
+            
+        } catch (SQLException ex) {
+            
+        }finally{
+            try{
+                resultSet.close();
+                preparedStatement.close();
+                conexaoSqlite.desconectar();
+            }catch(SQLException ex){
+                
+            }
+        }
+        return f;
+    }
+    
     
     public int verifca(Funcionario f, String senha){
         

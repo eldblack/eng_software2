@@ -27,6 +27,7 @@ public class Cardapio extends javax.swing.JFrame {
     public Cardapio(String cpf) {
         this.cpf = cpf;
         initComponents();
+        this.setLocationRelativeTo(null);
         mostrarAcompanhamento();
         mostrarLanches();
     }
@@ -83,6 +84,7 @@ public class Cardapio extends javax.swing.JFrame {
             }
         });
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Lanches"));
 
         tabelaLanches.setModel(new javax.swing.table.DefaultTableModel(
@@ -114,6 +116,7 @@ public class Cardapio extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
         );
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Acompanhamento"));
 
         tabelAcomp.setModel(new javax.swing.table.DefaultTableModel(

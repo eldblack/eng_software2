@@ -214,7 +214,7 @@ public class AlterarPedido extends javax.swing.JFrame {
                         .addGap(358, 358, 358))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 807, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(23, 23, 23))))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -308,7 +308,7 @@ public class AlterarPedido extends javax.swing.JFrame {
         // TODO add your handling code here:
         CadPedido cadP = null;
         try {
-            cadP = new CadPedido(cpf,txtCpf.getText());
+            cadP = new CadPedido(cpf,txtCpf.getText(), "altera");
         } catch (SQLException ex) {
             Logger.getLogger(AlterarPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -334,10 +334,9 @@ public class AlterarPedido extends javax.swing.JFrame {
                 Cadastro cad = new Cadastro();
                 int valorAdd = qtdOriginal - Integer.parseInt(txtQTD.getText());
                 lanche.setQtd(valorAdd+lanche.getQtd());
-                System.out.println(lanche.getQtd());
                 cad.alterarLanche(lanche);
                 try {
-                    pedido.buscarPedidoIP(Integer.parseInt(String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 0))));
+                    pedido = pedido.buscarPedidoIP(Integer.parseInt(String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 0))));
                     pedido.setQtd(pedido.getQtd()-valorAdd);
                     cad.alterarPedido(pedido);
                 } catch (SQLException ex) {
@@ -347,7 +346,6 @@ public class AlterarPedido extends javax.swing.JFrame {
                 Cadastro cad = new Cadastro();
                 int valorSub = Integer.parseInt(txtQTD.getText())-qtdOriginal;
                 lanche.setQtd(lanche.getQtd()-valorSub);
-                System.out.println(lanche.getQtd());
                 cad.alterarLanche(lanche);
                 try {
                     pedido = pedido.buscarPedidoIP(Integer.parseInt(String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 0))));
@@ -365,10 +363,9 @@ public class AlterarPedido extends javax.swing.JFrame {
                 Cadastro cad = new Cadastro();
                 int valorAdd = qtdOriginal - Integer.parseInt(txtQTD.getText());
                 acomp.setQtd(valorAdd+acomp.getQtd());
-                System.out.println(acomp.getQtd());
                 cad.alterarAcomp(acomp);
                 try {
-                    pedido.buscarPedidoIP(Integer.parseInt(String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 0))));
+                    pedido = pedido.buscarPedidoIP(Integer.parseInt(String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 0))));
                     pedido.setQtd(pedido.getQtd()-valorAdd);
                     cad.alterarPedido(pedido);
                 } catch (SQLException ex) {
@@ -381,7 +378,7 @@ public class AlterarPedido extends javax.swing.JFrame {
                 System.out.println(acomp.getQtd());
                 cad.alterarAcomp(acomp);
                 try {
-                    pedido.buscarPedidoIP(Integer.parseInt(String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 0))));
+                    pedido = pedido.buscarPedidoIP(Integer.parseInt(String.valueOf(tabelaPedido.getValueAt(tabelaPedido.getSelectedRow(), 0))));
                     pedido.setQtd(pedido.getQtd()+valorSub);
                     cad.alterarPedido(pedido);
                 } catch (SQLException ex) {

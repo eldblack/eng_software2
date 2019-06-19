@@ -21,7 +21,7 @@ public class Metodos {
        
     public Funcionario busca(String cpf){
         Funcionario f = new Funcionario();
-        f = null;
+        
         ConexaoSQlite conexaoSqlite = new ConexaoSQlite();
         conexaoSqlite.conectar();
         ResultSet resultSet = null;
@@ -39,7 +39,7 @@ public class Metodos {
             f.setRg(resultSet.getString("RG"));
             f.setSenha(resultSet.getString("senha"));
             f.setIdFunc(resultSet.getInt("id"));
-            
+            return f;
         } catch (SQLException ex) {
             
         }finally{
@@ -51,12 +51,12 @@ public class Metodos {
                 
             }
         }
-        return f;
+        return null;
     }
     
     public Funcionario buscaFunc(int id){
         Funcionario f = new Funcionario();
-        f = null;
+        
         ConexaoSQlite conexaoSqlite = new ConexaoSQlite();
         conexaoSqlite.conectar();
         ResultSet resultSet = null;
@@ -74,7 +74,7 @@ public class Metodos {
             f.setRg(resultSet.getString("RG"));
             f.setSenha(resultSet.getString("senha"));
             f.setIdFunc(resultSet.getInt("id"));
-            
+            return f;
         } catch (SQLException ex) {
             
         }finally{
@@ -86,7 +86,7 @@ public class Metodos {
                 
             }
         }
-        return f;
+        return null;
     }
     
     

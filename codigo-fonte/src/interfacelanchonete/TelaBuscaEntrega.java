@@ -346,35 +346,39 @@ public class TelaBuscaEntrega extends javax.swing.JFrame {
         dadosCliente.setVisible(true);
         painelPedido.setVisible(true);
         Entrega entrega = new Entrega();
-      
-        entrega = entrega.getEntrega(buscaCpf.getText());
-        nome.setText(entrega.getNome());
-        fone.setText(entrega.getTelefone());
-        txtCpf.setText(entrega.getCpf());
-        rg.setText(entrega.getRg());
-        end.setText(entrega.getEndereco());
-        double total=0;
-        try {
-            // TODO add your handling code here:
-            ArrayList<Pedido> pedidos;
-            Pedido pedido = new Pedido();
-            pedidos = pedido.buscarPedido(buscaCpf.getText());
-            if(pedidos.size()!=0){
-                DefaultTableModel tModel = (DefaultTableModel) tabelaPedido.getModel();
-                tModel.setRowCount(pedidos.size());
-                
-                for(int i=0; i<pedidos.size(); i++){
-                    tabelaPedido.setValueAt(pedidos.get(i).getNome(), i, 0);
-                    tabelaPedido.setValueAt(pedidos.get(i).getQtd(), i, 1);
-                    tabelaPedido.setValueAt(pedidos.get(i).getTipo(), i, 2);
-                    tabelaPedido.setValueAt(pedidos.get(i).getPreco(), i, 3);
-                    total+=pedidos.get(i).getPreco()*pedidos.get(i).getQtd();
-                    
+        try{
+            entrega = entrega.getEntrega(buscaCpf.getText());
+            nome.setText(entrega.getNome());
+            fone.setText(entrega.getTelefone());
+            txtCpf.setText(entrega.getCpf());
+            rg.setText(entrega.getRg());
+            end.setText(entrega.getEndereco());
+        }catch(NullPointerException e){
+        }
+            double total=0;
+        if(entrega!=null){
+            try {
+                // TODO add your handling code here:
+                ArrayList<Pedido> pedidos;
+                Pedido pedido = new Pedido();
+                pedidos = pedido.buscarPedido(buscaCpf.getText());
+                if(pedidos.size()!=0){
+                    DefaultTableModel tModel = (DefaultTableModel) tabelaPedido.getModel();
+                    tModel.setRowCount(pedidos.size());
+
+                    for(int i=0; i<pedidos.size(); i++){
+                        tabelaPedido.setValueAt(pedidos.get(i).getNome(), i, 0);
+                        tabelaPedido.setValueAt(pedidos.get(i).getQtd(), i, 1);
+                        tabelaPedido.setValueAt(pedidos.get(i).getTipo(), i, 2);
+                        tabelaPedido.setValueAt(pedidos.get(i).getPreco(), i, 3);
+                        total+=pedidos.get(i).getPreco()*pedidos.get(i).getQtd();
+
+                    }
                 }
+                valorTot.setText("R$"+total);
+            } catch (SQLException ex) {
+                Logger.getLogger(BuscarPedido.class.getName()).log(Level.SEVERE, null, ex);
             }
-            valorTot.setText("R$"+total);
-        } catch (SQLException ex) {
-            Logger.getLogger(BuscarPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_buscaActionPerformed

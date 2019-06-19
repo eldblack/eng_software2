@@ -34,10 +34,12 @@ public class CadPedido extends javax.swing.JFrame {
      */
     String cpf;
     String cpfCliente;
+    String tipo;
     ArrayList<Pedido> pedidos = new ArrayList<>();
-    public CadPedido(String cpf, String CpfCliente) throws SQLException {
+    public CadPedido(String cpf, String CpfCliente, String tipo) throws SQLException {
         this.cpfCliente = CpfCliente;
         this.cpf = cpf;
+        this.tipo = tipo;
         initComponents();
         DefaultTableModel tabelaLanche = null;
         DefaultTableModel tabelaAcomp = null;
@@ -76,7 +78,6 @@ public class CadPedido extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         txtCPF = new javax.swing.JFormattedTextField();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -293,8 +294,6 @@ public class CadPedido extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel2.setText("Não eh lixo");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -312,9 +311,7 @@ public class CadPedido extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addGap(38, 38, 38)
+                .addGap(101, 101, 101)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -327,11 +324,7 @@ public class CadPedido extends javax.swing.JFrame {
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
                 .addContainerGap())
@@ -354,11 +347,24 @@ public class CadPedido extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Metodos met = new Metodos();
         Funcionario f = met.busca(cpf);
-        if(cpfCliente.equals("nada")){
+        if(tipo.equals("cad")){
             if (f.getFuncao().equals("Vendedor")) {
                 new MenuFuncionario(cpf).show();
             } else {
                 new MenuGerente(cpf).show();
+            }
+        }else if(tipo.equals("entrega")){
+            TelaEntrega entrega = new TelaEntrega(cpf);
+            if(tabelaP.getRowCount() <= 0){
+                JOptionPane.showMessageDialog(null, "VOCÊ NÃO EFETUOU O PEDIDO, EFETUE O PEDIDO");
+                try {
+                    new CadPedido(cpf,cpfCliente,tipo).show();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CadPedido.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                entrega.setVisible(true);
+                this.dispose();
             }
         }else{
             AlterarPedido al = new AlterarPedido(cpf, cpfCliente);
@@ -493,7 +499,7 @@ public class CadPedido extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         int qtdLinhas = tabelaP.getModel().getRowCount();
-        if(cpfCliente.equals("nada")){
+        if(tipo.equals("cad")){
             for(int i=0; i<qtdLinhas; i++){
                 Pedido pedido = new Pedido();
                 pedido.setCpf(txtCPF.getText());
@@ -520,7 +526,8 @@ public class CadPedido extends javax.swing.JFrame {
                 }
                 cad.cadastrarPedido(pedido);
             }
-        }else{
+            JOptionPane.showMessageDialog(null, "pedido Cadastrado com sucesso!");
+        }else if(tipo.equals("altera")){
             Cadastro cad2 = new Cadastro();
             cad2.removerPedido(cpfCliente);
             for(int i=0; i<qtdLinhas; i++){
@@ -549,13 +556,36 @@ public class CadPedido extends javax.swing.JFrame {
                 }
                 cad.cadastrarPedido(pedido);
             }
+            JOptionPane.showMessageDialog(null, "pedido Cadastrado com sucesso!");
+        }else{
+            for(int i=0; i<qtdLinhas; i++){
+                Pedido pedido = new Pedido();
+                pedido.setCpf(txtCPF.getText());
+                pedido.setNome(String.valueOf(tabelaP.getValueAt(i, 0)));
+                pedido.setPreco(Double.parseDouble(String.valueOf(tabelaP.getValueAt(i, 1))));
+                pedido.setQtd(Integer.parseInt(String.valueOf(tabelaP.getValueAt(i, 2))));
+                pedido.setTipo(String.valueOf(tabelaP.getValueAt(i, 3)));
+                pedido.setID_lanche_Acomp(Integer.parseInt(String.valueOf(tabelaP.getValueAt(i, 4))));
+                Cadastro cad = new Cadastro();
+                if(pedido.getTipo().equals("lanche")){
+                    Lanche lanche = new Lanche();
+                    lanche = lanche.buscarLanche(Integer.parseInt(String.valueOf(tabelaP.getValueAt(i, 4))));
+                    if(lanche.getQtd()>pedido.getQtd()){
+                        lanche.setQtd(lanche.getQtd()-pedido.getQtd());
+                    }
+                    cad.alterarLanche(lanche);
+                }else if(pedido.getTipo().equals("acomp")){
+                    Acompanhamento acomp = new Acompanhamento();
+                    acomp = acomp.buscarAcomp(Integer.parseInt(String.valueOf(tabelaP.getValueAt(i, 4))));
+                    if(acomp.getQtd()>pedido.getQtd()){
+                        acomp.setQtd(acomp.getQtd()-pedido.getQtd());
+                    }
+                    cad.alterarAcomp(acomp);
+                }
+                cad.cadastrarPedido(pedido);
+            }
+            JOptionPane.showMessageDialog(null, "pedido Cadastrado com sucesso!");
         }
-        
-        if(!cpfCliente.equals("nada")){
-            this.dispose();
-            AlterarPedido altera = new AlterarPedido(cpf, cpfCliente);
-            altera.setVisible(true);
-       }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void tabelaPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPMouseClicked
@@ -593,7 +623,7 @@ public class CadPedido extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new CadPedido("","").setVisible(true);
+                    new CadPedido("","","").setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(CadPedido.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -608,7 +638,6 @@ public class CadPedido extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

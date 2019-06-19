@@ -126,7 +126,15 @@ public class Cardapio extends javax.swing.JFrame {
             new String [] {
                 "Id", "Tipo", "Valor", "Quantidade"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tabelAcomp);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -261,7 +269,7 @@ public class Cardapio extends javax.swing.JFrame {
                 tabelaLanches.setValueAt(resultSet.getInt("id"), qtd, 0);
                 tabelaLanches.setValueAt(resultSet.getString("nome"),qtd,1);
                 tabelaLanches.setValueAt(resultSet.getString("preco"), qtd, 2);
-                tabelaLanches.setValueAt(resultSet.getFloat("qtd"), qtd, 3);
+                tabelaLanches.setValueAt(resultSet.getInt("qtd"), qtd, 3);
                 qtd++;
             }
             
@@ -305,7 +313,7 @@ public class Cardapio extends javax.swing.JFrame {
                 tabelAcomp.setValueAt(resultSet.getInt("id"), qtd, 0);
                 tabelAcomp.setValueAt(resultSet.getString("tipo"),qtd,1);
                 tabelAcomp.setValueAt(resultSet.getString("valor"), qtd, 2);
-                tabelAcomp.setValueAt(resultSet.getFloat("qtd"), qtd, 3);
+                tabelAcomp.setValueAt(resultSet.getInt("qtd"), qtd, 3);
                 qtd++;
             }
             

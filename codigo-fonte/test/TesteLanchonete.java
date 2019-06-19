@@ -73,7 +73,6 @@ public class TesteLanchonete {
     
     @Test
     public void testBuscaEntrega(){
-    
         String cpf = "067.130.493-38";
         Entrega entrega = new Entrega();
         Entrega result = entrega.getEntrega(cpf);
@@ -129,9 +128,5 @@ public class TesteLanchonete {
         busca = met.buscaFunc(idFunc);
         assertNull(busca);
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
 }

@@ -340,7 +340,6 @@ public class Cadastro {
             if(resultado!=1){
                 JOptionPane.showMessageDialog(null,"Erro ao adicionar pedido", "Erro",JOptionPane.WARNING_MESSAGE);
             }else{
-                JOptionPane.showMessageDialog(null, "pedido Cadastrado com sucesso!");
             }
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,"Falha ao inserir pedido", "Erro",JOptionPane.WARNING_MESSAGE);
@@ -355,8 +354,8 @@ public class Cadastro {
             conexoaSQlite.desconectar();
         }
     }
-    public void removerPedido(String cpf){
-    
+    public Boolean removerPedido(String cpf){
+        Boolean aux=false;
         ConexaoSQlite conexaoSQlite = new ConexaoSQlite();
         conexaoSQlite.conectar();
         PreparedStatement preparedStatement=null;
@@ -365,6 +364,7 @@ public class Cadastro {
             preparedStatement=conexaoSQlite.criarPreparedStatement(sql);
             preparedStatement.setString(1, cpf);
             preparedStatement.executeUpdate();
+            aux = true;
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,"Erro ao Remover pedido", "Erro",JOptionPane.WARNING_MESSAGE);
         }finally {
@@ -375,6 +375,7 @@ public class Cadastro {
                 JOptionPane.showMessageDialog(null,"Erro ao Remover pedido", "Erro",JOptionPane.WARNING_MESSAGE);
             }            
         }
+        return aux;
     }
     
 }

@@ -225,7 +225,7 @@ public class TelaEntrega extends javax.swing.JFrame {
             }
             dispose();
             try {
-                new CadPedido(cpf, txtCpf.getText()).show();
+                new CadPedido(cpf, txtCpf.getText(), "entrega").show();
             } catch (SQLException ex) {
                 Logger.getLogger(TelaEntrega.class.getName()).log(Level.SEVERE, null, ex);
             }

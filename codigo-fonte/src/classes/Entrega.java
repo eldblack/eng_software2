@@ -65,53 +65,49 @@ public class Entrega extends Cliente {
         this.preco = preco;
     }
     
-    public Entrega getEntrega(String cpf){
-        
-        
-                Entrega entrega  = new Entrega();
-                ConexaoSQlite conSQLite = new ConexaoSQlite();
-                conSQLite.conectar();
-		ResultSet resultSet = null;
-		PreparedStatement preparedStatement = null;
-		
-		String sql = "SELECT * "
-				+ " FROM tbl_entrega"
-				+ " WHERE cpf = ?;";
-		
-		
-		try {
-			
-			preparedStatement = conSQLite.criarPreparedStatement(sql);
-			preparedStatement.setString(1,cpf);
-			resultSet = preparedStatement.executeQuery();
-                        boolean ver=FALSE;
-			while(resultSet.next()) {
-				entrega.setNome(resultSet.getString("nome"));
-                                entrega.setCpf(resultSet.getString("cpf"));
-                                entrega.setRg(resultSet.getString("RG"));
-                                entrega.setEndereco(resultSet.getString("endereco"));
-                                entrega.setTelefone(resultSet.getString("telefone"));
-                                ver = TRUE;
-                                return entrega;
-                        }
-                        if(FALSE == ver){
-                            JOptionPane.showMessageDialog(null, "ENTREGA NÃO ENCONTRADA");
-                        }
-                        
-                        
-			
-		}catch(SQLException ex) {
-			JOptionPane.showMessageDialog(null, "ENTREGA NÃO ENCONTRADA: "+ex, "ERRO", JOptionPane.ERROR_MESSAGE);
-		}finally {
-			try {
-				resultSet.close();
-				preparedStatement.close();
-				conSQLite.desconectar();
-			}catch(SQLException ex) {
-				JOptionPane.showMessageDialog(null, "ENTREGA NÃO ENCONTRADA: "+ex, "ERRO", JOptionPane.ERROR_MESSAGE);
+    public Entrega getEntrega(String cpf) {
 
-			}
-		}
+        Entrega entrega = new Entrega();
+        ConexaoSQlite conSQLite = new ConexaoSQlite();
+        conSQLite.conectar();
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+
+        String sql = "SELECT * "
+                + " FROM tbl_entrega"
+                + " WHERE cpf = ?;";
+
+        try {
+
+            preparedStatement = conSQLite.criarPreparedStatement(sql);
+            preparedStatement.setString(1, cpf);
+            resultSet = preparedStatement.executeQuery();
+            boolean ver = FALSE;
+            while (resultSet.next()) {
+                entrega.setNome(resultSet.getString("nome"));
+                entrega.setCpf(resultSet.getString("cpf"));
+                entrega.setRg(resultSet.getString("RG"));
+                entrega.setEndereco(resultSet.getString("endereco"));
+                entrega.setTelefone(resultSet.getString("telefone"));
+                ver = TRUE;
+                return entrega;
+            }
+            if (FALSE == ver) {
+                JOptionPane.showMessageDialog(null, "ENTREGA NÃO ENCONTRADA");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ENTREGA NÃO ENCONTRADA: " + ex, "ERRO", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                conSQLite.desconectar();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ENTREGA NÃO ENCONTRADA: " + ex, "ERRO", JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
         return null;
     }
     

@@ -156,6 +156,7 @@ public class TelaCancelarReserva extends javax.swing.JFrame {
             int linha = (int)tblReserva.getSelectedRow();
             int codigo = (int)tblReserva.getValueAt(linha, 0);
             Cadastro cad = new Cadastro();
+            System.out.println(codigo);
             cad.cancelarReserva(codigo);
             JOptionPane.showMessageDialog(null, "Reserva Cancelada", "", JOptionPane.WIDTH);
             mostrar();

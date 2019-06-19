@@ -660,7 +660,7 @@ public class AlterarReserva extends javax.swing.JFrame {
             preparedStatement.setString(2, buscaCpf.getText());
 
             preparedStatement.executeUpdate();
-            JOptionPane.showMessageDialog(null, "DATA ALTERADA", "ALTERAR", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "HORA ALTERADA", "ALTERAR", JOptionPane.INFORMATION_MESSAGE);
         }catch(SQLException err) {
 
             JOptionPane.showMessageDialog(null, "ERRO NA ALTERAÇÃO", "ALTERAR", JOptionPane.ERROR_MESSAGE);
@@ -698,11 +698,11 @@ public class AlterarReserva extends javax.swing.JFrame {
 
         try {
             preparedStatement = conSQLite.criarPreparedStatement(sql);
-            preparedStatement.setString(1, hora.getText());
+            preparedStatement.setString(1, card.getText());
             preparedStatement.setString(2, buscaCpf.getText());
 
             preparedStatement.executeUpdate();
-            JOptionPane.showMessageDialog(null, "DATA ALTERADA", "ALTERAR", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, " CARTÃO ALTERADO", "ALTERAR", JOptionPane.INFORMATION_MESSAGE);
         }catch(SQLException err) {
 
             JOptionPane.showMessageDialog(null, "ERRO NA ALTERAÇÃO", "ALTERAR", JOptionPane.ERROR_MESSAGE);

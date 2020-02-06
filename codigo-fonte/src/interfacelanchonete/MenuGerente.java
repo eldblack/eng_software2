@@ -502,7 +502,7 @@ public class MenuGerente extends javax.swing.JFrame {
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
-        ImageIcon imagens = new ImageIcon("C:\\Users\\Marcos Paulo\\Downloads\\WhatsApp Image 2019-05-22 at 13.16.06.jpeg");
+        ImageIcon imagens = new ImageIcon("build\\classes\\cadastro\\gunter-pixilart.png");
         JOptionPane.showMessageDialog(this, imagens);
     }//GEN-LAST:event_jLabel3MouseClicked
 

@@ -7,7 +7,7 @@ package cardapio;
 
 import bd.ComandoSQl;
 import bd.ConexaoSQlite;
-import com.sun.org.apache.regexp.internal.REUtil;
+//import com.sun.org.apache.regexp.internal.REUtil;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
